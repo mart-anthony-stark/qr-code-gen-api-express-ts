@@ -24,3 +24,20 @@ export const verifyToken = (
     next();
   });
 };
+
+// Verify if the user accessing the resource belongs to the current user
+
+
+// Verify if the role of user accessing is and "ADMIN"
+// RBAC
+export const verifyAdmin = (
+  req: IGetUserAuthInfoRequest,
+  res: Response,
+  next: NextFunction
+) => {
+  if (req.user.role === "admin") {
+    next();
+  } else {
+    res.status(403).send({ error: "You don't have permission" });
+  }
+};
