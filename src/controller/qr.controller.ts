@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import { IGetUserAuthInfoRequest } from "../types/Request.types";
 
 const QR = require("../models/QR.model");
 
@@ -13,8 +14,8 @@ export default {
     res.send(qr);
   },
 
-  createQR: async (req: Request, res: Response) => {
-    const qr = new QR(req.body);
+  createQR: async (req: IGetUserAuthInfoRequest, res: Response) => {
+    const qr = new QR({user: req.user._id, ...req.body});
     await qr.save();
     res.send(qr);
   },
