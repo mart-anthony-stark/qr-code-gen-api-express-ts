@@ -10,7 +10,7 @@ export default {
   },
 
   getAllQRByUser: async (req: Request, res: Response) => {
-    const qr = await QR.find({});
+    const qr = await QR.find({ user: req.params.uid });
     res.send(qr);
   },
 
@@ -26,8 +26,8 @@ export default {
   },
 
   updateQR: async (req: Request, res: Response) => {
-    const qr = await QR.findByIdAndUpdate(
-      req.params.id,
+    const qr = await QR.findOneAndUpdate(
+      { _id: req.params.id, user: req.params.uid },
       { $set: req.body },
       { new: true }
     );
