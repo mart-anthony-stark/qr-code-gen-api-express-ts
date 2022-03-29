@@ -26,10 +26,18 @@ export const verifyToken = (
 };
 
 // Verify if the user accessing the resource belongs to the current user
-
+// Rule based access control
+export const verifyCurrentUser = (
+  req: IGetUserAuthInfoRequest,
+  res: Response,
+  next: NextFunction
+) => {
+  if (req.user._id === req.params.uid || req.user.role === "admin") next();
+  else return res.status(403).send({ error: "You don't have permission" });
+};
 
 // Verify if the role of user accessing is and "ADMIN"
-// RBAC
+// Role Based Access Control
 export const verifyAdmin = (
   req: IGetUserAuthInfoRequest,
   res: Response,
