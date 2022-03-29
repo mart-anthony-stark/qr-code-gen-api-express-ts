@@ -7,6 +7,12 @@ const bcrypt = require("bcryptjs");
 export default {
   signup: async (req: Request, res: Response) => {
     try {
+      const exist = await User.findOne({ email: req.body.email });
+      if (exist)
+        return res
+          .status(401)
+          .send({ msg: "Email is already registered to an account" });
+
       const user = new User(req.body);
       const salt = await bcrypt.genSalt(10);
       user.password = await bcrypt.hash(req.body.password, salt);
