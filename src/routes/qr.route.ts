@@ -1,17 +1,23 @@
 import QRController from "../controller/qr.controller";
 import { Router } from "express";
-import { verifyCurrentUser, verifyToken } from "../utils/token";
+import { verifyAdmin, verifyCurrentUser, verifyToken } from "../utils/token";
 const router = Router();
 
-router.get("/all/:uid", verifyToken, verifyCurrentUser, QRController.getAllQR);
+router.get("/all/", verifyToken, verifyAdmin, QRController.getAllQR);
+
 router.get(
-  "/:id/user/:uid",
+  "/all/:uid",
   verifyToken,
   verifyCurrentUser,
-  QRController.getOneQR
+  QRController.getAllQRByUser
 );
+
+router.get("/:id", verifyToken, QRController.getOneQR);
+
 router.post("/", verifyToken, QRController.createQR);
+
 router.put("/:id", QRController.updateQR);
+
 router.delete("/:id", QRController.deleteQR);
 
 export default router;
