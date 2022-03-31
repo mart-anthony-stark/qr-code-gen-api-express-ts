@@ -3,7 +3,7 @@ import authController from "../controller/auth.controller";
 import { verifyToken } from "../utils/token";
 const router = Router();
 
-router.post("/islogged", verifyToken, authController.checkAuth);
+router.get("/islogged", verifyToken, authController.checkAuth);
 router.post("/register", authController.signup);
 router.post("/login", authController.login);
 
