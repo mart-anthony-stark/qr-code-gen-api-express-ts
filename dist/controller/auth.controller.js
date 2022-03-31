@@ -16,6 +16,9 @@ const User_model_1 = __importDefault(require("../models/User.model"));
 const token_1 = require("../utils/token");
 const bcrypt = require("bcryptjs");
 exports.default = {
+    checkAuth: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+        res.send({ user: req.user });
+    }),
     signup: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         try {
             const exist = yield User_model_1.default.findOne({ email: req.body.email });
