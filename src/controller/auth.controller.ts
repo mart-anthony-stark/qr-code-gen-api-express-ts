@@ -1,10 +1,15 @@
 import { Request, Response } from "express";
 
 import User from "../models/User.model";
+import { IGetUserAuthInfoRequest } from "../types/Request.types";
 import { createToken } from "../utils/token";
 const bcrypt = require("bcryptjs");
 
 export default {
+  checkAuth: async (req: IGetUserAuthInfoRequest, res: Response) => {
+    res.send({ user: req.user });
+  },
+
   signup: async (req: Request, res: Response) => {
     try {
       const exist = await User.findOne({ email: req.body.email });
