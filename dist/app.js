@@ -35,7 +35,7 @@ const cors = require("cors");
 dotenv.config({});
 const app = (0, express_1.default)();
 app.use(cors("*"));
-app.use(express_1.default.urlencoded({ extended: false }));
+app.use(express_1.default.urlencoded({ extended: true }));
 app.use(express_1.default.json());
 app.use("/auth", auth_route_1.default);
 app.use("/qr", qr_route_1.default);
