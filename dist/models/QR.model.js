@@ -14,5 +14,5 @@ const QRSchema = new mongoose.Schema({
         type: String,
         required: [true, "Value is required"],
     },
-});
+}, { timestamps: true });
 module.exports = mongoose.model("QRcode", QRSchema);
