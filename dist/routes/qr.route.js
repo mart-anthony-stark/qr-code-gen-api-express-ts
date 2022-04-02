@@ -13,4 +13,5 @@ router.get("/:id", token_1.verifyToken, qr_controller_1.default.getOneQR);
 router.post("/", token_1.verifyToken, qr_controller_1.default.createQR);
 router.put("/:id/user/:uid", token_1.verifyToken, token_1.verifyCurrentUser, qr_controller_1.default.updateQR);
 router.delete("/:id/user/:uid", token_1.verifyToken, token_1.verifyCurrentUser, qr_controller_1.default.deleteQR);
+module.exports = router;
 exports.default = router;
