@@ -29,12 +29,10 @@ export default {
       const codes = await QR.find({ user: req.user._id });
 
       if (codes.length === qrLimit)
-        return res
-          .status(403)
-          .send({
-            success: false,
-            msg: "You've reached the limit for free account",
-          });
+        return res.status(403).send({
+          success: false,
+          msg: "You've reached the limit for free account",
+        });
     }
 
     const qr = new QR({ user: req.user._id, ...req.body });
