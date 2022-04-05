@@ -31,9 +31,7 @@ exports.default = {
         if (req.user.subscription === "free") {
             const codes = yield QR.find({ user: req.user._id });
             if (codes.length === qrLimit)
-                return res
-                    .status(403)
-                    .send({
+                return res.status(403).send({
                     success: false,
                     msg: "You've reached the limit for free account",
                 });

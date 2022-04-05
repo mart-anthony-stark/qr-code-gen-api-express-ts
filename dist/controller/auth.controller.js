@@ -17,7 +17,10 @@ const token_1 = require("../utils/token");
 const bcrypt = require("bcryptjs");
 exports.default = {
     checkAuth: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-        res.send({ user: req.user });
+        const user = yield User_model_1.default.findOne({ _id: req.user._id });
+        const token = (0, token_1.createToken)(user);
+        user._doc.password = undefined;
+        res.send({ user: user._doc, token });
     }),
     signup: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         try {
