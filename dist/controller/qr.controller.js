@@ -10,6 +10,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const QR = require("../models/QR.model");
+const User = require("../models/User.model");
+// QR Code number limit for free accounts
+const qrLimit = 5;
 exports.default = {
     getAllQR: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         const qr = yield QR.find({});
@@ -24,9 +27,20 @@ exports.default = {
         res.send(qr);
     }),
     createQR: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+        // Guard for free account subscription limit
+        if (req.user.subscription === "free") {
+            const codes = yield QR.find({ user: req.user._id });
+            if (codes.length === qrLimit)
+                return res
+                    .status(403)
+                    .send({
+                    success: false,
+                    msg: "You've reached the limit for free account",
+                });
+        }
         const qr = new QR(Object.assign({ user: req.user._id }, req.body));
         yield qr.save();
-        res.send(qr);
+        res.send({ success: true, qr });
     }),
     updateQR: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         const qr = yield QR.findOneAndUpdate({ _id: req.params.id, user: req.params.uid }, { $set: req.body }, { new: true });
