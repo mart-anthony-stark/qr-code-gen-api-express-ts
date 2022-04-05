@@ -7,8 +7,10 @@ const bcrypt = require("bcryptjs");
 
 export default {
   checkAuth: async (req: IGetUserAuthInfoRequest, res: Response) => {
-    const token = createToken(req.user);
-    res.send({ user: req.user, token });
+    const user = await User.findOne({ _id: req.user._id });
+    const token = createToken(user);
+    user._doc.password = undefined;
+    res.send({ user: user._doc, token });
   },
 
   signup: async (req: Request, res: Response) => {
