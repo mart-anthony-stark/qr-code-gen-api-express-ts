@@ -7,7 +7,8 @@ const bcrypt = require("bcryptjs");
 
 export default {
   checkAuth: async (req: IGetUserAuthInfoRequest, res: Response) => {
-    res.send({ user: req.user });
+    const token = createToken(req.user);
+    res.send({ user: req.user, token });
   },
 
   signup: async (req: Request, res: Response) => {
